@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
-
+import time
 
 #下面两种写法都可以
 #chromedriver = "F:\TDD_with_python_WEB\\tools\chromedriver"
@@ -35,11 +35,12 @@ class NewVisitorTest(unittest.TestCase):
         #她按回车键后，页面更新了
         #代办实现表格显示了“1： Buys peacock feathers"
         inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
 
-        table = self.browser.find_element_by_id('id_lists_table')
-        rows = table.find_element_by_tag_name('tr')
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == '1:Buy peacock feathers' for row in rows)
+            any(row.text == '1:Buy peacock feathers' for row in rows), "New to-do item did not appear in table"
         )
         #页面中又显示了一个文本框，可以输入其他的代办事项
         #她输入了“Use peacock feathers to make a fly”

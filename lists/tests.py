@@ -19,4 +19,5 @@ class Homepage(TestCase):
         print('res ' + html)
         self.assertTrue(html.startswith('<html>'))
         self.assertIn('<title>To-Do lists</title>', html)
-        self.assertTrue(html.endswith('</html>'))
+        #html.strip().endswith 增加了strip是为了把空白字符给排除在判断之外
+        self.assertTrue(html.strip().endswith('</html>'))
