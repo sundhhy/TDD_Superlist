@@ -36,13 +36,7 @@ class NewVisitorTest(unittest.TestCase):
         #代办实现表格显示了“1： Buys peacock feathers"
         inputbox.send_keys(Keys.ENTER)
 
-        #table = self.browser.find_element_by_id('id_list_table')
-        #time.sleep(1)
-        #rows = table.find_elements_by_tag_name('tr')
-        #self.assertIn('1:Buy peacock feathers', [row.text for row in rows])
-        #self.assertTrue(
-        #    any(row.text == '1:Buy peacock feathers' for row in rows), "New to-do item did not appear in table -- its text was:\n{}".format(table.text)
-        #)
+
         #页面中又显示了一个文本框，可以输入其他的代办事项
         #她输入了“Use peacock feathers to make a fly”
 
@@ -54,10 +48,10 @@ class NewVisitorTest(unittest.TestCase):
 
 
         #页面再次更新，他的清单中显示了两个代办事项
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1:Buy peacock feathers', [row.text for row in rows])
-        self.assertIn('2:Use peacock feathers to make a fly', [row.text for row in rows])
+        self.check_for_row_in_list_table('1:Buy peacock feathers')
+        self.check_for_row_in_list_table('2:Use peacock feathers to make a fly')
+
+
 
         #伊迪丝想知道这个网站是否会记住她的清单
 
@@ -68,8 +62,13 @@ class NewVisitorTest(unittest.TestCase):
 
         #她很满意，去睡觉了
 
-
-
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+        #self.assertTrue(
+        #    any(row.text == '1:Buy peacock feathers' for row in rows), "New to-do item did not appear in table -- its text was:\n{}".format(table.text)
+        #)
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
