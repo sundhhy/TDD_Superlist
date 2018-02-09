@@ -30,6 +30,11 @@ class Homepage(TestCase):
         response = self.client.get('/')
         self.assertEqual(response.content.decode('utf8'),render_to_string('home.html'))
 
+    def test_home_page_only_saves_items_when_necessary(self):
+        request = HttpRequest()
+        home_page(request)
+        self.assertEqual(Item.objects.count(), 0)
+
     def test_hone_page_can_save_a_POST_request(self):
         request = HttpRequest()
         request.method = 'POST'
@@ -40,6 +45,13 @@ class Homepage(TestCase):
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
         self.assertEqual(new_item.text, 'A new list item')
+
+    def test_home_page_redirects_after_POST(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['item_text'] = 'A new list item'
+
+        response = home_page(request)
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['location'], '/')
@@ -52,10 +64,7 @@ class Homepage(TestCase):
         )
         self.assertEqual(response.content.decode(), expected_html)    
     '''
-    def test_home_page_only_saves_items_when_necessary(self):
-        request = HttpRequest()
-        home_page(request)
-        self.assertEqual(Item.objects.count(), 0)
+
 
     def test_home_page_displays_all_list_items(self):
         Item.objects.create(text='itemey 1')
@@ -66,6 +75,10 @@ class Homepage(TestCase):
 
         self.assertIn('itemey 1', response.content.decode())
         self.assertIn('itemey 2', response.content.decode())
+
+
+
+
 
 
 
