@@ -35,6 +35,10 @@ class NewVisitorTest(LiveServerTestCase):
         #她按回车键后，页面更新了
         #代办实现表格显示了“1： Buys peacock feathers"
         inputbox.send_keys(Keys.ENTER)
+        edith_lists_url = self.browser.current_url
+        self.assertRegex(edith_lists_url, 'lists/.+')
+        self.check_for_row_in_list_table('1:But peacock feathers')
+
         time.sleep(5)
 
         #页面中又显示了一个文本框，可以输入其他的代办事项
@@ -51,16 +55,36 @@ class NewVisitorTest(LiveServerTestCase):
         self.check_for_row_in_list_table('1:Buy peacock feathers')
         self.check_for_row_in_list_table('2:Use peacock feathers to make a fly')
 
+        #现在一叫作佛朗西斯的新用户访问了网站
 
+        ##我们使用一个新浏览器会话
+        ##确保伊迪丝的信息不会从cookie中泄漏出来
+        self.browser.quit()
+        self.browser = webdriver.Chrome(chromedriver)
 
-        #伊迪丝想知道这个网站是否会记住她的清单
+        #佛朗西斯访问首页
+        #页面中看不到伊迪丝的清单
+        self.browser.get(self.Live_server_url)
+        page_text = self.browser.find_element_by_name('body').text
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertNotIn('make a fly', page_text)
 
-        #她看到网站为她生成了唯一的URL
-        #而且页面中有一些文字解说这个功能
-        self.fail('Finish the test')
-        #她访问那个URL，发现她的代办实现列表还在
+        #佛朗西斯输入一个待办事项，新建一个清单
+        #他不像伊迪丝那样兴趣盎然
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Buy milk')
+        inputbox.send_keys(Keys.ENTER)
 
-        #她很满意，去睡觉了
+        #佛朗西斯获得了他的唯一URL
+        francis_list_url = self.browser.current_url
+        self.assertRegex(francis_list_url, '/lists/.+')
+        self.assertNotEqual(francis_list_url, edith_lists_url)
+
+        #这个页面还是没有伊迪丝的清单
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('Buy peacock feathers', page_text)
+        self.assertIn('Buy milk， ')
+
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
