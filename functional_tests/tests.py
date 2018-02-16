@@ -37,9 +37,9 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
         edith_lists_url = self.browser.current_url
         self.assertRegex(edith_lists_url, 'lists/.+')
-        self.check_for_row_in_list_table('1:But peacock feathers')
+        self.check_for_row_in_list_table('1:Buy peacock feathers')
 
-        time.sleep(5)
+        time.sleep(3)
 
         #页面中又显示了一个文本框，可以输入其他的代办事项
         #她输入了“Use peacock feathers to make a fly”
@@ -47,7 +47,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(5)
+        time.sleep(3)
         #伊迪丝做事很有条理
 
 
@@ -64,8 +64,8 @@ class NewVisitorTest(LiveServerTestCase):
 
         #佛朗西斯访问首页
         #页面中看不到伊迪丝的清单
-        self.browser.get(self.Live_server_url)
-        page_text = self.browser.find_element_by_name('body').text
+        self.browser.get(self.live_server_url)
+        page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertNotIn('make a fly', page_text)
 
