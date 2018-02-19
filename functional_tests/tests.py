@@ -83,7 +83,7 @@ class NewVisitorTest(LiveServerTestCase):
         #这个页面还是没有伊迪丝的清单
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Buy peacock feathers', page_text)
-        self.assertIn('Buy milk， ')
+        self.assertIn('Buy milk', page_text)
 
 
     def check_for_row_in_list_table(self, row_text):
