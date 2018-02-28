@@ -1,4 +1,5 @@
-from django.test import LiveServerTestCase
+#from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
@@ -7,11 +8,13 @@ import time
 #chromedriver = "F:\TDD_with_python_WEB\\tools\chromedriver"
 chromedriver = '../../../tools/chromedriver'
 
-class NewVisitorTest(LiveServerTestCase):
+#class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome(chromedriver)
         self.browser.implicitly_wait(3)
     def tearDown(self):
+        self.browser.refresh()
         self.browser.quit()
 
     def test_layout_and_styling(self):
@@ -34,7 +37,7 @@ class NewVisitorTest(LiveServerTestCase):
             512,
             delta=10
         )
-'''
+
     def test_can_start_a_list_and_retrieve_it_later(self):
         #伊迪丝听说有一个很酷的在线代办事项应用
         #她去看了这个应用的首页
@@ -113,7 +116,7 @@ class NewVisitorTest(LiveServerTestCase):
         #self.assertTrue(
         #    any(row.text == '1:Buy peacock feathers' for row in rows), "New to-do item did not appear in table -- its text was:\n{}".format(table.text)
         #)
-        '''
+        
 
 
 
