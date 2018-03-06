@@ -5,8 +5,11 @@ from selenium.webdriver.common.keys import Keys
 import time
 import sys
 
+from pyvirtualdisplay import Display
 #下面两种写法都可以
-#chromedriver = "F:\TDD_with_python_WEB\\tools\chromedriver"
+#chromedriver = "/usr/local/share/chromedriver"
+display = Display(visible=0, size=(800, 800))
+display.start()
 chromedriver = '../../../tools/chromedriver'
 
 #class NewVisitorTest(LiveServerTestCase):
