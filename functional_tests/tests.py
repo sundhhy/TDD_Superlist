@@ -4,12 +4,16 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import sys
+import platform
 
 from pyvirtualdisplay import Display
 #下面两种写法都可以
 #chromedriver = "/usr/local/share/chromedriver"
-display = Display(visible=0, size=(800, 800))
-display.start()
+
+print(platform.platform())
+if 'Windows' not in platform.platform():
+    display = Display(visible=0, size=(800, 800))
+    display.start()
 chromedriver = '../../../tools/chromedriver'
 
 #class NewVisitorTest(LiveServerTestCase):
