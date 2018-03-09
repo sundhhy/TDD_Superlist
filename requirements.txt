@@ -1,2 +1,6 @@
 Django==2.0.1
+EasyProcess==0.2.3
+gunicorn==19.7.1
 pytz==2018.3
+PyVirtualDisplay==0.2.1
+selenium==3.9.0
