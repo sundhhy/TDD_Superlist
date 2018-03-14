@@ -1,11 +1,11 @@
 from django.test import TestCase
-from .views import home_page
+#from .views import home_page
 from django.http import HttpRequest
 #from django.core.urlresolvers import  resolve
 from django.urls import reverse
 from django.template.loader import render_to_string
 
-from .models import Item, List
+from lists.models import Item, List
 
 # Create your tests here.
 class Homepage(TestCase):
