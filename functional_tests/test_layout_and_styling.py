@@ -1,6 +1,7 @@
 from .base import FunctionalTest
-
+from unittest import skip
 class LayoutAndStylingTest(FunctionalTest):
+    @skip
     def test_layout_and_styling(self):
         #伊迪丝访问首页
         self.browser.get(self.server_url)

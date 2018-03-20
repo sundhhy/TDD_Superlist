@@ -4,7 +4,7 @@ from .base import chromedriver
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
-
+from unittest import skip
 
 
 
@@ -12,6 +12,7 @@ import time
 
 
 class NewVisitorTest(FunctionalTest):
+
     def test_can_start_a_list_and_retrieve_it_later(self):
         #伊迪丝听说有一个很酷的在线代办事项应用
         #她去看了这个应用的首页

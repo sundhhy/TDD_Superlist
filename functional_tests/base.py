@@ -1,11 +1,14 @@
 #from django.test import LiveServerTestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
-
+from selenium.common.exceptions import WebDriverException
 import sys
 import platform
-
+import time
 from pyvirtualdisplay import Display
+
+MAX_WAIT = 10
+
 #下面两种写法都可以
 #chromedriver = "/usr/local/share/chromedriver"
 
@@ -47,6 +50,15 @@ class FunctionalTest(StaticLiveServerTestCase):
         #    any(row.text == '1:Buy peacock feathers' for row in rows), "New to-do item did not appear in table -- its text was:\n{}".format(table.text)
         #)
 
+    def wait_for(self, fn):
+        start_time = time.time()
+        while True:
+            try:
+                return fn()
+            except (AssertionError, WebDriverException) as e:
+                if time.time() - start_time > MAX_WAIT:
+                    raise e
+                time.sleep(0.5)
 
 
 

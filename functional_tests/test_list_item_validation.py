@@ -1,5 +1,5 @@
 from .base import FunctionalTest
-#from unittest import skip
+#
 
 class ItemValiddationaTets(FunctionalTest):
 
@@ -10,22 +10,29 @@ class ItemValiddationaTets(FunctionalTest):
         self.browser.find_element_by_id('id_new_item').send_keys('\n')
         # 首页刷新了，显示一个错误消息
         # 提示待办事项不能为空
-        error = self.browser.find_element_by_css_selector('.has-error')
-        self.assertEqual(error.text, "You can't have an empty lists item")
+        #error = self.browser.find_element_by_css_selector('.has-error')
+        #self.assertEqual(error.text, "You can't have an empty lists item")
+        self.wait_for(lambda: self.assertEqual(
+            self.browser.find_element_by_css_selector('.has-error').text,
+            "You can't have an empty list item"
+        ))
         # 她输入一些文字，然后再次提交，这次没问题了
         self.browser.find_element_by_id('id_new_item').send_keys('Buy milk\n')
-        self.check_for_row_in_list_table('1: Buy milk')
+        self.check_for_row_in_list_table('1:Buy milk')
         # 她有点儿调皮，又提交了一个空待办事项
         self.browser.find_element_by_id('id_new_item').send_keys('\n')
         # 在清单页面她看到了一个类似的错误消息
-        self.check_for_row_in_list_table('1: Buy milk')
-        error = self.browser.find_element_by_css_selector('.has-error')
-        self.assertEqual(error.text, "You can't have an empty lists item")
-
+        self.check_for_row_in_list_table('1:Buy milk')
+        #error = self.browser.find_element_by_css_selector('.has-error')
+        #self.assertEqual(error.text, "You can't have an empty lists item")
+        self.wait_for(lambda: self.assertEqual(
+            self.browser.find_element_by_css_selector('.has-error').text,
+            "You can't have an empty list item"
+        ))
         # 输入文字之后就没问题了
         self.browser.find_element_by_id('id_new_item').send_keys('Buy tea\n')
-        self.check_for_row_in_list_table('1: Buy milk')
-        self.check_for_row_in_list_table('2: Buy tea')
+        self.check_for_row_in_list_table('1:Buy milk')
+        self.check_for_row_in_list_table('2:Buy tea')
         self.fail('write me')
 
 
