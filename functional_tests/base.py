@@ -50,6 +50,9 @@ class FunctionalTest(StaticLiveServerTestCase):
         #    any(row.text == '1:Buy peacock feathers' for row in rows), "New to-do item did not appear in table -- its text was:\n{}".format(table.text)
         #)
 
+    def get_item_input_box(self):
+        return self.browser.find_element_by_id('id_text')
+
     def wait_for(self, fn):
         start_time = time.time()
         while True:
