@@ -1,4 +1,6 @@
 from .base import FunctionalTest
+
+from unittest import skip
 #
 
 class ItemValiddationaTets(FunctionalTest):
