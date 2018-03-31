@@ -7,13 +7,18 @@ from django.template.loader import render_to_string
 from django.utils.html import escape
 
 from lists.models import Item, List
+from lists.forms import ItemForm
 from unittest import skip
 
 # Create your tests here.
 class Homepage(TestCase):
-    def test_use_home_templates(self):
+    def test_home_page_renders_home_template(self):
         response = self.client.get('/')
-        #self.assertEqual(response.content.decode('utf8'),render_to_string('home.html'))
+        self.assertTemplateUsed(response,'home.html')
+
+    def test_home_page_uses_item_form(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
 
 class ListViewTest(TestCase):
 

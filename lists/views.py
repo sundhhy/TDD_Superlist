@@ -4,12 +4,13 @@ from django.core.exceptions import ValidationError
 
 
 from .models import Item,List
+from .forms import ItemForm
 # Create your views here.
 #def home_page(request):
 #    return HttpResponse('<html><title>To-Do lists</title></html>')
 
 def home_page(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html', {'form':ItemForm()})
 
 
 def view_list(request, list_id):
