@@ -57,6 +57,24 @@ class ItemValiddationaTets(FunctionalTest):
         #error = self.browser.find_element_by_css_selector('.has-error')
         #self.assertEqual(error.text, "You've already got this in your list")
         self.wait_for(lambda: self.assertEqual(
-            self.browser.find_element_by_css_selector('.has-error').text,
+            self.get_error_elemeent().text,
             "text\nYou've already got this in your list"
         ))
+
+    def test_error_messages_are_cleared_on_input(self):
+        #伊迪丝新建一个清单，但方法不当，所以出现了一个验证错误。
+        self.browser.get(self.server_url)
+        self.get_item_input_box().send_keys('Buy wellies\n')
+        self.get_item_input_box().send_keys('Buy wellies\n')
+        error = self.get_error_elemeent()
+        self.assertTrue(error.is_displayed())
+
+        #为了消除错误，她开始在输入框中输入内容
+        self.get_item_input_box().send_keys('a')
+        #看到错误消息消失了，她很高兴
+        error = self.get_error_elemeent()
+        self.assertFalse(error.is_displayed())
+
+
+    def get_error_elemeent(self):
+        return self.browser.find_element_by_css_selector('.has-error')
