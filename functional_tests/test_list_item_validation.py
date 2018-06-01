@@ -44,7 +44,7 @@ class ItemValiddationaTets(FunctionalTest):
         self.check_for_row_in_list_table('1:Buy milk')
         self.check_for_row_in_list_table('2:Buy tea')
         self.fail('write me')
-
+    @skip
     def test_cannot_add_duplicate_item(self):
         # 伊迪丝访问首页，新建一个清单
         self.browser.get(self.server_url)
@@ -57,8 +57,8 @@ class ItemValiddationaTets(FunctionalTest):
         #error = self.browser.find_element_by_css_selector('.has-error')
         #self.assertEqual(error.text, "You've already got this in your list")
         self.wait_for(lambda: self.assertEqual(
-            self.get_error_elemeent().text,
-            "text\nYou've already got this in your list"
+            self.get_error_elemeent(),
+            "text You've already got this in your list"
         ))
 
     def test_error_messages_are_cleared_on_input(self):
